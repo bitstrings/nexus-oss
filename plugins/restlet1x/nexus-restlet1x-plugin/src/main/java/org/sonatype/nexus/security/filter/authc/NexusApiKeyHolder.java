@@ -13,12 +13,19 @@
 
 package org.sonatype.nexus.security.filter.authc;
 
+import java.util.Set;
+
 /**
- * Marker interface for API-Keys; use the HTTP header name as the component hint.
+ * Marker interface for API-Keys; Unlike {@link NexusApiKey}, here the component hint is not used, but instead the
+ * return value of the {@link #getHttpHeaders()} method. This makes runtime changes more easier (than registering new
+ * component with new hint, as would happen in old Plexus).
  * 
- * @deprecated Use {@link NexusApiKeyHolder} instead.
+ * @since 2.7.0
  */
-@Deprecated
-public interface NexusApiKey
+public interface NexusApiKeyHolder
 {
+  /**
+   * Returns the set of HTTP headers that should be considered as API-Keys, never {@code null}.
+   */
+  Set<String> getHttpHeaders();
 }
